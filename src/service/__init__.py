@@ -282,6 +282,9 @@ class Service(object):
             while not predicate() and time.time() < timeout:
                 time.sleep(0.1)
         return predicate()
+    
+    def preimport(self):
+        pass
 
     def start(self, block=False):
         """
@@ -306,6 +309,7 @@ class Service(object):
         pid = self.get_pid()
         if pid:
             raise ValueError('Daemon is already running at PID %d.' % pid)
+        self.preimport()
 
         # The default is to place the PID file into ``/var/run``. This
         # requires root privileges. Since not having these is a common
